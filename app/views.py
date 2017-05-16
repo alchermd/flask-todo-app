@@ -2,6 +2,7 @@ from flask import render_template, request, flash, redirect, url_for, session
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from app.forms import RegistrationForm, TaskForm
+from app.access_control import login_required
 from app import app
 
 # MySQL connection.
@@ -71,6 +72,7 @@ def login():
 
 # Route for the logout page.
 @app.route("/logout")
+@login_required
 def logout():
     # Clear the user session then redirect them to login page.
     session.clear()
@@ -79,6 +81,7 @@ def logout():
 
 # Route for the user dashboard.
 @app.route("/dashboard", methods=["GET", "POST"])
+@login_required
 def dashboard():
     if request.method == "POST":
         if request.form['method'] == "UPDATE":
@@ -124,6 +127,7 @@ def dashboard():
 
 # Route for the add task page.
 @app.route("/add_task", methods=["GET", "POST"])
+@login_required
 def add_task():
     form = TaskForm(request.form)
 
