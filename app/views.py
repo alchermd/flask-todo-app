@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for, session
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, TaskForm
 from app import app
 
 # MySQL connection.
@@ -83,3 +83,28 @@ def dashboard():
     if request.method == "POST":
         pass
     return render_template("dashboard.html", title="Dashboard")
+
+# Route for the add task page.
+@app.route("/add_task", methods=["GET", "POST"])
+def add_task():
+    form = TaskForm(request.form)
+
+    if request.method == "POST" and form.validate():
+        # Get task information
+        author = session['username']
+        description = form.description.data
+        status = form.status.data
+
+        # Create a cursor and query the database.
+        curr = mysql.connection.cursor()
+        curr.execute("INSERT INTO tasks(author, description, status) VALUES(%s, %s, %s)", (author, description, status))
+        
+        # Commit and close connection.
+        mysql.connection.commit()
+        curr.close()
+
+        # Flash and redirect back to dashboard.
+        flash("Task added.", "success")
+        return redirect(url_for("dashboard"))
+        
+    return render_template("add_task.html", title="Add Task", form=form)
