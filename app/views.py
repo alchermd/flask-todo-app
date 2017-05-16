@@ -82,7 +82,16 @@ def logout():
 def dashboard():
     if request.method == "POST":
         pass
-    return render_template("dashboard.html", title="Dashboard")
+
+    # Create a cursor and query the database.
+    curr = mysql.connection.cursor()
+    curr.execute("SELECT * FROM tasks WHERE author=%s", (session['username'],))
+    tasks = curr.fetchall()
+
+    # Close the connection before rendering.
+    curr.close()
+
+    return render_template("dashboard.html", title="Dashboard", tasks=tasks)
 
 # Route for the add task page.
 @app.route("/add_task", methods=["GET", "POST"])
