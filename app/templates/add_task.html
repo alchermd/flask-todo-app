@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <div class="alert alert-info">
+        <p>Be as descriptive as possible. "I want to run 3km today" is better than "I want to get fit."</p>
+    </div>
+    <form method="POST" action="">
+        <div class="form-group">
+            {{ render_field(form.description, class_="form-control") }}
+        </div>
+        <input type="hidden" name="status" value="in_progress">
+        <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+    </form>
+{% endblock %}
