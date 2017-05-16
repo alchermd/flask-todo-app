@@ -10,9 +10,32 @@ A ***CRUD*** (**C**reate, **R**ead, **U**pdate, **D**elete) application is one o
 
 The ***Flask To-Do App*** uses **Flask** and **MySQL** for backend, and **Bootstrap** plus some custom *CSS* for the front end.
 
-## Instructions
+## Requirements
 
-`TODO: Add instructions`
+This application uses `python3` and `MySQL`
+
+## Setup
+
+1. Install dependencies
+
+```
+$ pip install -r requirements.txt
+```
+
+2. Setup the database
+
+```
+# Change app/__init__.py configuration if necessary.
+$ mysql -u root -p
+# Enter password
+mysql> CREATE DATABASE flask_todo_app;
+mysql> source schema.sql;
+```
+
+3. Start the server.
+```
+$ python3 run.py
+```
 
 ## License
 
