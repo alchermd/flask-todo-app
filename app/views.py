@@ -7,10 +7,12 @@ from app import app
 # MySQL connection.
 mysql = MySQL(app)
 
+# Route for the index page or home page.
 @app.route("/")
 def index():
     return render_template("home.html", title="Home")
 
+# Route for the registration page.
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm(request.form)
@@ -35,6 +37,7 @@ def register():
         
     return render_template("register.html", title="Register", form=form)
 
+# Route for the login page.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -66,6 +69,7 @@ def login():
 
     return render_template("login.html", title="Login")
 
+# Route for the logout page.
 @app.route("/logout")
 def logout():
     # Clear the user session then redirect them to login page.
@@ -73,6 +77,7 @@ def logout():
     flash("You are now logged out.", "info")
     return redirect(url_for("login"))
 
+# Route for the user dashboard.
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if request.method == "POST":
