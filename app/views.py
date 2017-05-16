@@ -81,7 +81,20 @@ def logout():
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if request.method == "POST":
-        pass
+        # Get data from user input
+        id = request.form['id']
+        status =  request.form['status']
+
+        # Create a cursor and query the database.
+        curr = mysql.connection.cursor()
+        curr.execute("UPDATE tasks SET status = %s WHERE id = %s", (status, id))
+
+        # Commit and close connection.
+        mysql.connection.commit()
+        curr.close()
+
+        # Redirect back to dashboard.
+        redirect(url_for("dashboard"))
 
     # Create a cursor and query the database.
     curr = mysql.connection.cursor()

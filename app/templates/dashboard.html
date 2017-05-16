@@ -28,10 +28,19 @@
                 </td>
                 <td>{{task.create_date}}</td>
                 <td>
+                    {% if task.status == 'in_progress' %}
                     <form method="POST" action="">
-                        <input type="hidden" value="completed">
+                        <input type="hidden" name="status" value="completed">
+                        <input type="hidden" name="id" value="{{task.id}}">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i></button>                        
                     </form>
+                    {% else %}
+                    <form method="POST" action="">
+                        <input type="hidden" name="status" value="in_progress">
+                        <input type="hidden" name="id" value="{{task.id}}">
+                        <button type="submit" class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i></button>                        
+                    </form>
+                    {% endif %}
                 </td>
                 <td><a href="/delete_task/task-{{task.id}}" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
             </tr>
