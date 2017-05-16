@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+
+<h1>Welcome, {{session.username}}!</h1>
+<h2><small>Ready to start something awesome?</small> <a href="/add_task" class="btn btn-primary">Add Task</a></h2>
+
+{% endblock %}
