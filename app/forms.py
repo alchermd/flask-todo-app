@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, PasswordField, validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, SelectField, validators
 from wtforms.fields.html5 import EmailField
 
 class RegistrationForm(Form):
@@ -8,4 +8,6 @@ class RegistrationForm(Form):
     password = PasswordField("Password", [validators.Length(min=5), validators.DataRequired(), validators.EqualTo("confirm", message="Passwords must match.")])
     confirm = PasswordField("Confirm Password")
 
-    
+class TaskForm(Form):
+    description = TextAreaField("Task Description", [validators.Length(min=10, max=255), validators.DataRequired()])
+    status = SelectField("Status", [validators.DataRequired()], choices=[(None, "-"), ("in_progress", "In Progress"), ("completed", "Completed")])
