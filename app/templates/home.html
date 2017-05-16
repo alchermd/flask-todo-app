@@ -4,8 +4,12 @@
     <div class="jumbotron">
         <h1>Flask To-Do App</h1>
         <p class="lead">A simple yet effective productivity solution.</p>
+        {% if session.logged_in %}
+        <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+        {% else %}
         <a class="btn btn-primary" href="/login">Login</a>
         <a class="btn btn-info" href="/register">Sign Up</a>
+        {% endif %}
     </div>
 
     <div class="row text-center">
