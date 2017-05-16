@@ -81,21 +81,37 @@ def logout():
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if request.method == "POST":
-        # Get data from user input
-        id = request.form['id']
-        status =  request.form['status']
+        if request.form['method'] == "UPDATE":
+            # Get data from user input
+            id = request.form['id']
+            status =  request.form['status']
 
-        # Create a cursor and query the database.
-        curr = mysql.connection.cursor()
-        curr.execute("UPDATE tasks SET status = %s WHERE id = %s", (status, id))
+            # Create a cursor and query the database.
+            curr = mysql.connection.cursor()
+            curr.execute("UPDATE tasks SET status = %s WHERE id = %s", (status, id))
 
-        # Commit and close connection.
-        mysql.connection.commit()
-        curr.close()
+            # Commit and close connection.
+            mysql.connection.commit()
+            curr.close()
 
-        # Redirect back to dashboard.
-        redirect(url_for("dashboard"))
+            # Redirect back to dashboard.
+            redirect(url_for("dashboard"))
+        
+        elif request.form['method'] == "DELETE":
+            id = request.form['id']
 
+            # Create a cursor and query the database.
+            curr = mysql.connection.cursor()
+            curr.execute("DELETE FROM tasks WHERE id = %s", (id,))
+
+            # Commit and close connection.
+            mysql.connection.commit()
+            curr.close()
+
+            # Flash and redirect back to dashboard.
+            flash("Task deleted", "warning")
+            redirect(url_for("dashboard"))  
+        
     # Create a cursor and query the database.
     curr = mysql.connection.cursor()
     curr.execute("SELECT * FROM tasks WHERE author=%s", (session['username'],))
