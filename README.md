@@ -2,7 +2,7 @@
 
 ![](https://cdn.pixabay.com/photo/2017/01/20/19/53/productivity-1995786_960_720.jpg)
 
-<center><i>There's not enough of these things already.</i></center>
+<div align="center"><i>There's not enough of these things already.</i></div>
 
 ## Motivation
 
