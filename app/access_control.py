@@ -11,3 +11,13 @@ def login_required(f):
             flash("Please login to continue.", "danger")
             return redirect(url_for("login"))
     return decorated_function
+
+def for_guests(f):
+    @wraps(f)
+    def decorated_function(*args, **kwrags):
+        if not 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("Invalid Action.", "danger")
+            return redirect(url_for("dashboard"))
+    return decorated_function
