@@ -65,3 +65,9 @@ def login():
         return render_template("login.html", title="Login", err="Invalid credentials.")
 
     return render_template("login.html", title="Login")
+
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    if request.method == "POST":
+        pass
+    return render_template("dashboard.html", title="Dashboard")
