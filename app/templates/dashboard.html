@@ -2,7 +2,45 @@
 
 {% block body %}
 
-<h1>Welcome, {{session.username}}!</h1>
-<h2><small>Ready to start something awesome?</small> <a href="/add_task" class="btn btn-primary">Add Task</a></h2>
+    <h1>Welcome, {{session.username}}!</h1>
+    <h2><small>Ready to start something awesome?</small> <a href="/add_task" class="btn btn-primary">Add Task</a></h2>
 
+    <hr>
+
+    {% if tasks %}
+    <table class="table table-responsive table-striped">
+        <tr class="text-center">
+            <th>Description</th>
+            <th>Status</th>
+            <th>Added</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{task.description}}</td>
+                <td>
+                    {% if task.status == 'in_progress' %}
+                    In Progress
+                    {% else %}
+                    Completed
+                    {% endif %}
+                </td>
+                <td>{{task.create_date}}</td>
+                <td>
+                    <form method="POST" action="">
+                        <input type="hidden" value="completed">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i></button>                        
+                    </form>
+                </td>
+                <td><a href="/delete_task/task-{{task.id}}" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">No tasks found.</div>
+
+    {% endif %}
 {% endblock %}
