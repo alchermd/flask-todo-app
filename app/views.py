@@ -2,7 +2,7 @@ from flask import render_template, request, flash, redirect, url_for, session
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from app.forms import RegistrationForm, TaskForm
-from app.access_control import login_required
+from app.access_control import login_required, for_guests
 from app import app
 
 # MySQL connection.
@@ -15,6 +15,7 @@ def index():
 
 # Route for the registration page.
 @app.route("/register", methods=["GET", "POST"])
+@for_guests
 def register():
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
@@ -40,6 +41,7 @@ def register():
 
 # Route for the login page.
 @app.route("/login", methods=["GET", "POST"])
+@for_guests
 def login():
     if request.method == "POST":
         # Get user data from form
