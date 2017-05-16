@@ -66,6 +66,13 @@ def login():
 
     return render_template("login.html", title="Login")
 
+@app.route("/logout")
+def logout():
+    # Clear the user session then redirect them to login page.
+    session.clear()
+    flash("You are now logged out.", "info")
+    return redirect(url_for("login"))
+
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if request.method == "POST":
