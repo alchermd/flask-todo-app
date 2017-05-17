@@ -25,8 +25,20 @@ def register():
         email = form.email.data
         password = sha256_crypt.encrypt(str(form.password.data))
 
-        # Create a cursor and insert user into the database.
+        # Create a cursor for database queries.
         curr = mysql.connection.cursor()
+        
+        # Check if username is already taken.
+        matches = curr.execute("SELECT * FROM users WHERE username = %s", (username,))
+        if matches:
+            return render_template("register.html", title="Register", form=form, err="Username already taken.")
+
+        # Check if email is already taken.
+        matches = curr.execute("SELECT * FROM users WHERE email = %s", (email,))
+        if matches:
+            return render_template("register.html", title="Register", form=form, err="Email already taken")
+
+        # Save the user's credentials into the database.
         curr.execute("INSERT INTO users(name, username, email, password) VALUES(%s, %s, %s, %s)", (name, username, email, password))
 
         # Close connection.
