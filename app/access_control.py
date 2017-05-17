@@ -14,7 +14,7 @@ def login_required(f):
 
 def for_guests(f):
     @wraps(f)
-    def decorated_function(*args, **kwrags):
+    def decorated_function(*args, **kwargs):
         if not 'logged_in' in session:
             return f(*args, **kwargs)
         else:
